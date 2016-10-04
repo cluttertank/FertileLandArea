@@ -21,6 +21,13 @@ public class AgriculturalLandTest {
     }
 
     @Test
+    public void testFertileLandAnalysis_input2() {
+        AgriculturalLand land = new AgriculturalLand(0, 0, 400, 600);
+        land.parseBarrenLands("{\"199 299 200 300\"}");
+        assertEquals("22816 192608", land.getFertileLandAreas());
+    }
+
+    @Test
     public void testInvalidInputFormat_input1() {
         AgriculturalLand land = new AgriculturalLand(0, 0, 400, 600);
         try {
