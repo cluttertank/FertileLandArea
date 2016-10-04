@@ -1,0 +1,37 @@
+
+apply plugin: 'java'
+apply plugin: "eclipse"
+apply plugin: "maven"
+apply plugin: 'jacoco'
+
+apply plugin:'application'
+mainClassName = 'org.land.FertileLandArea'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+buildscript {
+    repositories {
+        maven { url "http://plugins.gradle.org/m2/" }
+        jcenter { url 'http://jcenter.bintray.com/' }
+        maven { url 'http://repo1.maven.org/maven2' }
+    }
+}
+
+repositories {
+    jcenter { url 'http://jcenter.bintray.com/' }
+    maven { url 'http://repo1.maven.org/maven2' }
+}
+
+dependencies {
+    testCompile 'junit:junit:4.12'
+}
+
+task uberjar(type: Jar) {
+    from files(sourceSets.main.output.classesDir)
+    from configurations.runtime.asFileTree.files.collect { zipTree(it) }
+
+    manifest {
+        attributes 'Main-Class': 'org.land.FertileLandArea'
+    }
+}
