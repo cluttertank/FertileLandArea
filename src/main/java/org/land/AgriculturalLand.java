@@ -6,6 +6,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class AgriculturalLand {
@@ -42,8 +44,14 @@ public class AgriculturalLand {
     }
 
     private void parseBarrenLandInputString(String barrenLandInputString) {
-        if (barrenLandInputString == null || barrenLandInputString.length() == 0)
+        if( barrenLandInputString == null || barrenLandInputString.length() == 0 )
             return;
+        
+        Pattern p = Pattern.compile("\\s*\\{\\s*[\"|“]\\s*\\d+\\s*\\d+\\s*\\d+\\s*\\d+\\s*[\"|”]\\s*(,\\s*[\"|“]\\s*\\d+\\s*\\d+\\s*\\d+\\s*\\d+\\s*[\"|”]\\s*){0,}\\}\\s*");
+        Matcher m = p.matcher(barrenLandInputString);
+        if( ! m.matches() ){
+            throw new RuntimeException("Unparseable input exception");
+        }
         barrenLandInputString = barrenLandInputString.replaceAll("\\{|\\}", "");
         String[] rects = barrenLandInputString.split("\\s*,\\s*");
 
@@ -56,7 +64,7 @@ public class AgriculturalLand {
                 int x2 = Integer.valueOf(coordinates[2]) + 1;
                 int y2 = Integer.valueOf(coordinates[3]) + 1;
                 if( x1 < this.x1 || y1 < this.y1 || x2 > this.x2 || y2 > this.y2 ) {
-                    throw new RuntimeException("Invalid input for barren land co-ordinates");
+                    throw new RuntimeException("Invalid barren land co-ordinates");
                 }
                 this.barrenLands.add(new LandRectangle(false, x1, y1, x2, y2));
             }

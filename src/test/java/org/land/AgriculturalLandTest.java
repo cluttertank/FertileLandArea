@@ -21,12 +21,32 @@ public class AgriculturalLandTest {
     }
 
     @Test
+    public void testInvalidInputFormat_input1() {
+        AgriculturalLand land = new AgriculturalLand(0, 0, 400, 600);
+        try {
+            land.parseBarrenLands("  {  “ 48 192 351 207 547”}");
+        } catch( RuntimeException re ) {
+            assertEquals("Unparseable input exception", re.getMessage());
+        }
+    }
+
+    @Test
+    public void testInvalidInputFormat_input2() {
+        AgriculturalLand land = new AgriculturalLand(0, 0, 400, 600);
+        try {
+            land.parseBarrenLands("  {  “ 48 192 351 207”, “  48  547”}");
+        } catch( RuntimeException re ) {
+            assertEquals("Unparseable input exception", re.getMessage());
+        }
+    }
+
+    @Test
     public void testInvalidBarrenLandCoordinates_input1() {
         AgriculturalLand land = new AgriculturalLand(0, 0, 400, 600);
         try {
             land.parseBarrenLands("{\"0 292 401 307\"}");
         } catch( RuntimeException re ) {
-            assertEquals("Invalid input for barren land co-ordinates", re.getMessage());
+            assertEquals("Invalid barren land co-ordinates", re.getMessage());
         }
     }
 
