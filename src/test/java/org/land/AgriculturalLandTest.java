@@ -21,10 +21,59 @@ public class AgriculturalLandTest {
     }
 
     @Test
-    public void testFertileLandAnalysis_input2() {
+    public void testFertileLandAnalysis_input3() {
         AgriculturalLand land = new AgriculturalLand(0, 0, 400, 600);
         land.parseBarrenLands("{\"199 299 200 300\"}");
-        assertEquals("22816 192608", land.getFertileLandAreas());
+        assertEquals("239996", land.getFertileLandAreas());
+    }
+
+    @Test
+    public void testFertileLandAnalysis_input4() {
+        AgriculturalLand land = new AgriculturalLand(0, 0, 400, 600);
+        land.parseBarrenLands("{\"0 0 399 0\", \"0 0 0 599\", \"0 599 399 599\", \"399 0 399 599\"}");
+        assertEquals("238004", land.getFertileLandAreas());
+    }
+
+    @Test
+    public void testFertileLandAnalysis_input5() {
+        AgriculturalLand land = new AgriculturalLand(0, 0, 400, 600);
+        land.parseBarrenLands("{\"0 299 399 299\", \"199 0 199 599\"}");
+        assertEquals("59501 59700 59800 60000", land.getFertileLandAreas());
+    }
+
+    @Test
+    public void testFertileLandAnalysis_input6() {
+        AgriculturalLand land = new AgriculturalLand(0, 0, 400, 600);
+        land.parseBarrenLands("{\"0 0 0 0\", \"399 0 399 0\", \"0 599 0 599\", \"399 599 399 599\"}");
+        assertEquals("239996", land.getFertileLandAreas());
+    }
+
+    @Test
+    public void testFertileLandAnalysis_input7() {
+        AgriculturalLand land = new AgriculturalLand(0, 0, 400, 600);
+        land.parseBarrenLands("{\"1 0 1 0\", \"0 1 0 1\", \"398 0 398 0\", \"399 1 399 1\", \"0 598 0 598\", \"1 599 1 599\", \"398 599 398 599\", \"399 598 399 598\"}");
+        assertEquals("1 1 1 1 239988", land.getFertileLandAreas());
+    }
+
+    @Test
+    public void testFertileLandAnalysis_input8() {
+        AgriculturalLand land = new AgriculturalLand(0, 0, 400, 600);
+        land.parseBarrenLands("{\"0 199 399 199\", \"0 399 399 400\", \"199 0 200 599\"}");
+        assertEquals("39601 39601 39601 39601 39601 39601", land.getFertileLandAreas());
+    }
+
+    @Test
+    public void testEmptyInput() {
+        AgriculturalLand land = new AgriculturalLand(0, 0, 400, 600);
+        land.parseBarrenLands("");
+        assertEquals("240000", land.getFertileLandAreas());
+    }
+
+    @Test
+    public void testNoCoordinates() {
+        AgriculturalLand land = new AgriculturalLand(0, 0, 400, 600);
+        land.parseBarrenLands(" { } ");
+        assertEquals("240000", land.getFertileLandAreas());
     }
 
     @Test
